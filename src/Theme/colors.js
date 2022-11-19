@@ -1,0 +1,31 @@
+// Khởi tạo màu dùng chung cho các component
+
+export const Colors = {
+  white_bg: '#FFFFFF',
+  transparent: 'transparent',
+  gray_bg: '#222222',
+  Opacity: 'rgba(0, 0 ,0 ,0.5)',
+  GhostWhite: '#F8F8FF',
+  WhiteSmoke: '#F5F5F5',
+  Gainsboro: '#DCDCDC',
+  White: '#FFFFFF',
+  Black: '#000000',
+  DimGray: '#696969',
+  LightGray: '	#D3D3D3',
+  Gray: '#BEBEBE',
+  Gray11: '#1C1C1C',
+  Gray21: '#363636',
+  Gray31: '#4F4F4F',
+  Gray41: '#696969',
+  Gray51: '#828282',
+  Gray61: '#9C9C9C',
+  Gray71: '	#B5B5B5',
+  Gray81: '#CFCFCF',
+  Gray91: '#E8E8E8',
+  DarkGray: '	#A9A9A9',
+  LightSlateGray: '#778899',
+  SlateGray: '#708090',
+  Blue: '#0033FF',
+  Google: '#CC3300',
+  RED:'#FF0000'
+};
