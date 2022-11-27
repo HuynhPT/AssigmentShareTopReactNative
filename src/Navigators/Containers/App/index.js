@@ -4,10 +4,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import ScreenHomeContainer from '../../Screens/Home/ScreenHomeContainer';
 import SplashScreen from '../../Screens/Splash/SplashScreenContainer';
 import LoginContainer from '../../Screens/Login/LoginContainer';
+import BottomNavigator from '../BottomNavigation';
 export const NameScreen = {
-  SCREEN_HOME: 'Home',
+  SCREEN_MAIN: 'Main',
   SCREEN_SPLASH: 'Splash',
-  SCREEN_LOGIN:'Login'
+  SCREEN_LOGIN: 'Login',
 };
 const AppContainer = () => {
   //Khởi tạo
@@ -25,8 +26,8 @@ const AppContainer = () => {
         screenOptions={{headerShown: false}}
         initialRouteName={NameScreen.SCREEN_SPLASH}>
         <Native_Stack.Screen
-          name={NameScreen.SCREEN_HOME}
-          component={ScreenHomeContainer}
+          name={NameScreen.SCREEN_MAIN}
+          component={BottomNavigator}
         />
         <Native_Stack.Screen
           name={NameScreen.SCREEN_SPLASH}

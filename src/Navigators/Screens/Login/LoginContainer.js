@@ -81,7 +81,7 @@ const LoginContainer = ({navigation}) => {
   const onHandleLogin = () => {
     if (isCheckRemember === true) {
       setTimeout(() => {
-        navigation.navigate(NameScreen.SCREEN_HOME);
+        navigation.navigate(NameScreen.SCREEN_MAIN);
         dispatch(setIsLoading(false));
       }, 3000);
       dispatch(setIsLoading(true));
@@ -91,7 +91,7 @@ const LoginContainer = ({navigation}) => {
           if (valUserName === isAccount.userName) {
             if (valPassWord === isAccount.passWord) {
               setTimeout(() => {
-                navigation.navigate(NameScreen.SCREEN_HOME);
+                navigation.navigate(NameScreen.SCREEN_MAIN);
                 dispatch(setIsLoading(false));
               }, 3000);
               dispatch(setIsLoading(true));

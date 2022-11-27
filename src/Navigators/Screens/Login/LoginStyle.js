@@ -43,7 +43,7 @@ export const styles = ScaledSheet.create({
   mVersion: {
     position: 'relative',
     zIndex: 1,
-    top: '40@vs',
+    top: '20@vs',
   },
   mTextVersion: {
     fontSize: Sizes.size_18,
