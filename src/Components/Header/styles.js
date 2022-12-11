@@ -5,7 +5,7 @@ import {Sizes} from '../../Theme/sizes';
 export const styles = ScaledSheet.create({
   mContainer: {
     flex: 0.15,
-    backgroundColor: Colors.Gray61,
+    backgroundColor: Colors.Gray91,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },

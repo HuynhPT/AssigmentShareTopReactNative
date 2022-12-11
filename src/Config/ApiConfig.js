@@ -16,7 +16,7 @@ export const NAME_API = {
    */
   GET_PRODUCT_NIKE: 'api/Category/1/Product',
   GET_PRODUCT_MLB: 'api/Category/2/Product',
-  GET_PRODUCT_Vans: 'api/Category/3/Product',
+  GET_PRODUCT_VANS: 'api/Category/3/Product',
   GET_PRODUCT_ADIDAS: 'api/Category/4/Product',
 
   /**
@@ -26,4 +26,9 @@ export const NAME_API = {
   ADD_ACCOUNT: 'api/Account',
   // PUT_ACCOUNT: `api/Account/${id}`,
   // DELETE_ACCOUNT: ` api/Account/${id}`,
+
+  /**
+   * Lấy dữ liệu banner
+   */
+  GET_BANNER:'api/Banner'
 };

@@ -27,5 +27,6 @@ export const Colors = {
   SlateGray: '#708090',
   Blue: '#0033FF',
   Google: '#CC3300',
-  RED:'#FF0000'
+  RED:'#FF0000',
+  ORANGE_RED:'#CD3700'
 };

@@ -1,8 +1,9 @@
-import {View, Text, FlatList, Image} from 'react-native';
+import {View, Text, FlatList, Image, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NAME_API} from '../../../../Config/ApiConfig';
 import axios from 'axios';
 import {Colors} from '../../../../Theme/colors';
+import {styles} from './styles';
 
 const ProductNikeList = () => {
   const [dataProduct, setDataProduct] = useState([]);
@@ -16,6 +17,7 @@ const ProductNikeList = () => {
       axios({
         method: 'GET',
         url: `${NAME_API.LOCALHOST}` + `${NAME_API.GET_PRODUCT_NIKE}`,
+        // params:5,
       })
         .then(res => {
           console.log(res.data, 'data');
@@ -28,41 +30,38 @@ const ProductNikeList = () => {
       console.log(error);
     }
   }, []);
+
+  /**
+   * Fomat giá tiềntheo kiểu VND
+   * @link https://vntalking.com/cach-dinh-dang-tien-te-trong-javascript.html
+   * Tham khảo link trên
+   */
+  const formatter = new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  });
   const RenderItemList = ({item}) => {
     return (
-      <View
-        style={{
-          height: 120,
-          backgroundColor: Colors.white_bg,
-          marginHorizontal: 16,
-          marginVertical: 12,
-          borderRadius: 30,
-        }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: 16,
-          }}>
+      <TouchableOpacity style={styles.mContainer}>
+        <View style={styles.mBody}>
           <Image
             source={{uri: item?.image[0]}}
-            resizeMode="cover"
-            style={{width: 100, height: 100, borderRadius: 20}}
+            resizeMode="contain"
+            style={styles.mImage}
           />
-          <View>
-            
-            <Text style={{maxWidth:250}}>{item?.name}</Text>
-            <Text>{item?.price}</Text>
+          <View style={styles.mViewText}>
+            <Text style={styles.mTextImage} numberOfLines={1}>{item?.name}</Text>
+            <Text style={styles.mPrice}>{formatter.format(item?.price)}</Text>
             <View style={{flexDirection: 'row'}}>
-              {item?.size.map(i => (
-                <View style={{padding: 5}}>
-                  <Text>{i}</Text>
+              {item?.size.map((i, index) => (
+                <View key={index} style={styles.mSize}>
+                  <Text style={styles.mTextSize}>{i}</Text>
                 </View>
               ))}
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
