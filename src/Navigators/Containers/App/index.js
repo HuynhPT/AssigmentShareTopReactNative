@@ -1,14 +1,17 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import ScreenHomeContainer from '../../Screens/Home/ScreenHomeContainer';
 import SplashScreen from '../../Screens/Splash/SplashScreenContainer';
 import LoginContainer from '../../Screens/Login/LoginContainer';
 import BottomNavigator from '../BottomNavigation';
+import ScreenInfomations from '../../Screens/Infomation/ScreenInfomationsContainer';
+import ScreenFavoriteContainer from '../../Screens/Favorite/ScreenFavoriteContainer';
 export const NameScreen = {
   SCREEN_MAIN: 'Main',
   SCREEN_SPLASH: 'Splash',
   SCREEN_LOGIN: 'Login',
+  SCREEN_INFO: 'ScreenInfomations',
+  SCREEN_FAVORITE: 'ScreenFavoriteContainer',
 };
 const AppContainer = () => {
   //Khởi tạo
@@ -36,6 +39,14 @@ const AppContainer = () => {
         <Native_Stack.Screen
           name={NameScreen.SCREEN_LOGIN}
           component={LoginContainer}
+        />
+        <Native_Stack.Screen
+          name={NameScreen.SCREEN_INFO}
+          component={ScreenInfomations}
+        />
+        <Native_Stack.Screen
+          name={NameScreen.SCREEN_FAVORITE}
+          component={ScreenFavoriteContainer}
         />
       </Native_Stack.Navigator>
     </NavigationContainer>

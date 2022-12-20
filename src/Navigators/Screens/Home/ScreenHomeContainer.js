@@ -3,14 +3,12 @@ import {
   Text,
   ScrollView,
   Dimensions,
-  ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import HeaderApp from '../../../Components/Header';
 import {TITLE_HEADER} from '../../../Constants/Header';
 import ProductNikeList from '../Products/ProductNike';
-import {Colors} from '../../../Theme/colors';
 import axios from 'axios';
 import {NAME_API} from '../../../Config/ApiConfig';
 import {Image} from 'react-native';
@@ -18,31 +16,45 @@ import {FlatList} from 'react-native';
 import {ItemHeaderLeft, ItemHeaderRight} from './ItemComponents';
 import {dataIcon} from '../../../Utils/fakeData';
 import {styles} from './ScreenHomeStyle';
+import {useDispatch, useSelector} from 'react-redux';
+import {setIsloading} from '../../../Store/SliceState/Home';
+import Loading from '../../../Components/Loading';
+import {NameScreen} from '../../Containers/App';
 const {width: screenWidth} = Dimensions.get('window');
-const ScreenHomeContainer = () => {
+const ScreenHomeContainer = ({navigation}) => {
   const [dataBanner, setDataBanner] = useState([]);
   const [dataNike, setDataNike] = useState([]);
   const [dataMLB, setDataMLB] = useState([]);
   const [dataAdidas, setDataAdidas] = useState([]);
   const [dataVans, setDataVans] = useState([]);
-
   const indexScroll = useRef(null);
+  const dispatch = useDispatch();
+  const {isLoading} = useSelector(state => ({
+    isLoading: state.home.isLoading,
+  }));
   useEffect(() => {
-    // chạy vòng lặp banner
-    if (dataBanner.length > 0) {
-      let index = 0;
-      setInterval(() => {
-        indexScroll.current.scrollTo({
-          x: index * screenWidth,
-          y: 0,
-          animated: true,
-        });
-        index += 1;
-        if (index === dataBanner.length) {
-          index = 0;
-        }
-      }, 3000);
-    }
+    setTimeout(() => {
+      dispatch(setIsloading(false));
+    }, 2000);
+  }, []);
+  useEffect(() => {
+    try {
+      // chạy vòng lặp banner
+      if (dataBanner?.length > 0) {
+        let index = 0;
+        setInterval(() => {
+          indexScroll?.current?.scrollTo({
+            x: index * screenWidth,
+            y: 0,
+            animated: true,
+          });
+          index += 1;
+          if (index === dataBanner.length) {
+            index = 0;
+          }
+        }, 3000);
+      }
+    } catch (error) {}
   }, [dataBanner]);
   useEffect(() => {
     try {
@@ -114,6 +126,15 @@ const ScreenHomeContainer = () => {
       console.log(error);
     }
   }, []);
+  const onHandleFavorite = () => {
+    navigation.navigate(NameScreen.SCREEN_FAVORITE);
+  };
+  const onHandleInfomation = item => {
+    navigation.navigate(NameScreen.SCREEN_INFO, item);
+  };
+  const onHandleGoToCategory = () => {
+    navigation.navigate('Category');
+  };
   // product saleoff
   const ListHeaderComponent = () => {
     return (
@@ -141,6 +162,9 @@ const ScreenHomeContainer = () => {
         </ScrollView>
         {dataNike.map((item, index) => (
           <ItemHeaderLeft
+            onPress={() => {
+              onHandleInfomation(item);
+            }}
             imgUri={item?.image[0]}
             name={item?.name}
             price={item?.price}
@@ -152,6 +176,9 @@ const ScreenHomeContainer = () => {
 
         {dataMLB.map((item, index) => (
           <ItemHeaderRight
+            onPress={() => {
+              onHandleInfomation(item);
+            }}
             imgUri={item?.image[0]}
             name={item?.name}
             price={item?.price}
@@ -162,6 +189,9 @@ const ScreenHomeContainer = () => {
         ))}
         {dataVans.map((item, index) => (
           <ItemHeaderLeft
+            onPress={() => {
+              onHandleInfomation(item);
+            }}
             imgUri={item?.image[0]}
             name={item?.name}
             price={item?.price}
@@ -173,6 +203,9 @@ const ScreenHomeContainer = () => {
 
         {dataAdidas.map((item, index) => (
           <ItemHeaderRight
+            onPress={() => {
+              onHandleInfomation(item);
+            }}
             imgUri={item?.image[0]}
             name={item?.name}
             price={item?.price}
@@ -183,7 +216,10 @@ const ScreenHomeContainer = () => {
         ))}
         <View style={styles.mViewContainIcon}>
           {dataIcon.map((i, index) => (
-            <TouchableOpacity key={index} style={styles.ViewIcon}>
+            <TouchableOpacity
+              key={index}
+              style={styles.ViewIcon}
+              onPress={onHandleGoToCategory}>
               <Image
                 resizeMode="contain"
                 source={i.icon}
@@ -201,10 +237,10 @@ const ScreenHomeContainer = () => {
       <HeaderApp
         isBack={false}
         onBack={() => {}}
-        onFavorite={() => {}}
+        isFavorite={true}
+        onFavorite={onHandleFavorite}
         titleHeader={TITLE_HEADER}
       />
-
       <View style={styles.mFlatlist}>
         <FlatList
           data={[]}
@@ -213,10 +249,13 @@ const ScreenHomeContainer = () => {
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={true}
           ListHeaderComponent={ListHeaderComponent}
-          ListFooterComponent={() => <ProductNikeList />}
+          ListFooterComponent={() => (
+            <ProductNikeList onPress={onHandleInfomation} />
+          )}
         />
         {/* <ProductNikeList /> */}
       </View>
+      <Loading isLoading={isLoading} />
     </View>
   );
 };

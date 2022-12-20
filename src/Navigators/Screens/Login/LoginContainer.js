@@ -36,6 +36,7 @@ import Loading from '../../../Components/Loading';
 import {NameScreen} from '../../Containers/App';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Sizes} from '../../../Theme/sizes';
+import {setIsloading} from '../../../Store/SliceState/Home';
 
 const LoginContainer = ({navigation}) => {
   //Khởi tạo state dùng trong component
@@ -82,7 +83,10 @@ const LoginContainer = ({navigation}) => {
     if (isCheckRemember === true) {
       setTimeout(() => {
         navigation.navigate(NameScreen.SCREEN_MAIN);
+        //loading login
         dispatch(setIsLoading(false));
+        //loading Home
+        dispatch(setIsloading(true));
       }, 3000);
       dispatch(setIsLoading(true));
     } else {
@@ -92,7 +96,10 @@ const LoginContainer = ({navigation}) => {
             if (valPassWord === isAccount.passWord) {
               setTimeout(() => {
                 navigation.navigate(NameScreen.SCREEN_MAIN);
+                //loading login
                 dispatch(setIsLoading(false));
+                //loading Home
+                dispatch(setIsloading(true));
               }, 3000);
               dispatch(setIsLoading(true));
               dispatch(setIsCheckPass(false));

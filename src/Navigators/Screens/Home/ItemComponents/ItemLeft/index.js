@@ -2,7 +2,7 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 
-const ItemHeaderComponent = ({sales, name, price, priceSales, imgUri}) => {
+const ItemHeaderComponent = ({sales, name, price, priceSales, imgUri, onPress}) => {
   /**
    * Fomat giá tiềntheo kiểu VND
    * @link https://vntalking.com/cach-dinh-dang-tien-te-trong-javascript.html
@@ -13,7 +13,7 @@ const ItemHeaderComponent = ({sales, name, price, priceSales, imgUri}) => {
     currency: 'VND',
   });
   return (
-    <TouchableOpacity style={styles.mContainer}>
+    <TouchableOpacity style={styles.mContainer} onPress={onPress}>
       <View>
         <View style={styles.sales}>
           <Text style={styles.titleSale}>{sales}</Text>

@@ -4,9 +4,8 @@ import {NAME_API} from '../../../../Config/ApiConfig';
 import axios from 'axios';
 import {Colors} from '../../../../Theme/colors';
 import {styles} from './styles';
-import {NameScreen} from '../../../Containers/App';
 
-const ProductNikeList = ({onPress}) => {
+const ProductMLBList = ({onPress}) => {
   const [dataProduct, setDataProduct] = useState([]);
   /**
    * call api bằng axios và useEffect
@@ -17,7 +16,7 @@ const ProductNikeList = ({onPress}) => {
     try {
       axios({
         method: 'GET',
-        url: `${NAME_API.LOCALHOST}` + `${NAME_API.GET_PRODUCT_NIKE}`,
+        url: `${NAME_API.LOCALHOST}` + `${NAME_API.GET_PRODUCT_MLB}`,
         // params:5,
       })
         .then(res => {
@@ -41,12 +40,13 @@ const ProductNikeList = ({onPress}) => {
     style: 'currency',
     currency: 'VND',
   });
- 
   const RenderItemList = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.mContainer}
-        onPress={()=>{onPress(item)}}>
+        onPress={() => {
+          onPress(item);
+        }}>
         <View style={styles.mBody}>
           <Image
             source={{uri: item?.image[0]}}
@@ -71,7 +71,7 @@ const ProductNikeList = ({onPress}) => {
     );
   };
   return (
-    <View style={{flex:1}}>
+    <View style={{flex: 1}}>
       <FlatList
         data={dataProduct}
         renderItem={RenderItemList}
@@ -81,4 +81,4 @@ const ProductNikeList = ({onPress}) => {
   );
 };
 
-export default ProductNikeList;
+export default ProductMLBList;

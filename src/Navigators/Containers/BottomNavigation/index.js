@@ -8,6 +8,7 @@ import {Colors} from '../../../Theme/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {CART, CATEGORY, HOME, PERSON} from '../../../Constants/Header';
+import ScreenCategory from '../../Screens/Category/ScreenCategory';
 const BottomNavigator = () => {
   const Bottom = createBottomTabNavigator();
   return (
@@ -39,7 +40,7 @@ const BottomNavigator = () => {
       />
       <Bottom.Screen
         name={'Category'}
-        component={ScreenCartContainer}
+        component={ScreenCategory}
         options={{
           tabBarIcon: ({focused}) => {
             return (
@@ -59,7 +60,7 @@ const BottomNavigator = () => {
       />
       <Bottom.Screen
         name={'Cart'}
-        component={ScreenHomeContainer}
+        component={ScreenCartContainer}
         options={{
           tabBarIcon: ({focused}) => {
             return (

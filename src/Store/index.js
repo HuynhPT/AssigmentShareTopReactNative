@@ -14,24 +14,32 @@ import {
   persistReducer,
   persistStore,
 } from 'redux-persist';
+import Cart from './SliceState/Cart';
+import Category from './SliceState/Category';
+import Favorite from './SliceState/Favorite';
+import Home from './SliceState/Home';
 
-import Loginstate from './SliceState/Login/index'
+import Loginstate from './SliceState/Login/index';
 /**Khi tạo Redux store, truyền vào hàm createStore của bạn một hàm persistReducer có tác dụng đóng gói reducer gốc trong app của bạn. Một khi store đã được khởi tạo, truyền nó vào hàm persistStore để đảm bảo Redux state sẽ được lưu vào storage mỗi khi nó thay đổi.
  * @see https://github.com/rt2zz/redux-persist
  * @port npm install --save redux-persist - hoặc - yarn add redux-persist
  */
- const persistConfig = {
-  key: "root",
+const persistConfig = {
+  key: 'root',
   version: 1,
-  storage:AsyncStorage
+  storage: AsyncStorage,
 };
 const rootReducer = combineReducers({
-  loginState:Loginstate
+  loginState: Loginstate,
+  category: Category,
+  home: Home,
+  cart: Cart,
+  favorite: Favorite,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
