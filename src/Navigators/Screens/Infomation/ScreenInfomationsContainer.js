@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Share,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import HeaderApp from '../../../Components/Header';
 import {TITLE_HEADER} from '../../../Constants/Header';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -27,8 +27,12 @@ import {ToastAndroid} from 'react-native';
 import {NameScreen} from '../../Containers/App';
 import {useDispatch, useSelector} from 'react-redux';
 import {addFavorite, removeFavorite} from '../../../Store/SliceState/Favorite';
+import {setBuyCart} from '../../../Store/SliceState/Cart';
 const {width: screenWidth} = Dimensions.get('window');
 const ScreenInfomations = ({route, navigation}) => {
+  const [stateColor, setStateColor] = useState('');
+  const [stateSize, setStateSize] = useState('');
+
   const dataInfomation = route.params;
   const dispatch = useDispatch();
   const {dataFavorite, databuyCart} = useSelector(state => ({
@@ -49,15 +53,18 @@ const ScreenInfomations = ({route, navigation}) => {
    * @import {ToastAndroid} from 'react-native'
    */
   const onHandleFavorite = () => {
-    // if (dataFavorite.map(i => i.id).toString() === dataInfomation?.id) {
-    //   // dispatch(removeFavorite(dataInfomation?.id));
-    //   // ToastAndroid.show(TOAT_REMOVEFAVORITE, 2000);
-    //   console.log('true');
-    // } else {
-    //   dispatch(addFavorite(dataInfomation));
-    //   ToastAndroid.show(TOAST_FAVORITE, 2000);
-    //   console.log('false');
-    // }
+    if (
+      dataFavorite.filter(i => i.id == dataInfomation?.id).map(i => i.id)
+        .length > 0
+    ) {
+      dispatch(removeFavorite(dataInfomation?.id));
+      ToastAndroid.show(TOAT_REMOVEFAVORITE, 2000);
+      console.log('true');
+    } else {
+      dispatch(addFavorite(dataInfomation));
+      ToastAndroid.show(TOAST_FAVORITE, 2000);
+      console.log('false');
+    }
   };
 
   /**
@@ -85,9 +92,30 @@ const ScreenInfomations = ({route, navigation}) => {
     style: 'currency',
     currency: 'VND',
   });
+
+  const onSelectColor = i => {
+    console.log(i, 'color');
+    setStateColor(i);
+  };
+  const onSelectSize = i => {
+    console.log(i, 'size');
+    setStateSize(i);
+  };
   const onHandleGoToCart = () => {
-    ToastAndroid.show(TOAST_MES, 2000);
-    navigation.navigate('Cart', dataInfomation);
+    if (stateColor != '' && stateSize != '') {
+      dispatch(
+        setBuyCart({
+          id: Math.random(),
+          avatar: dataInfomation?.image[0],
+          name: dataInfomation?.name,
+          price: dataInfomation?.price,
+          size: stateSize,
+          color: stateColor,
+        }),
+      );
+      ToastAndroid.show(TOAST_MES, 2000);
+      navigation.navigate('Cart');
+    }
   };
   return (
     <View style={styles.mContainer}>
@@ -105,7 +133,9 @@ const ScreenInfomations = ({route, navigation}) => {
           <TouchableOpacity onPress={onHandleFavorite}>
             <Icon
               name={
-                dataFavorite.map(i => i.id).toString() === dataInfomation?.id
+                dataFavorite
+                  .filter(i => i.id == dataInfomation?.id)
+                  .map(i => i.id).length > 0
                   ? 'heart'
                   : 'hearto'
               }
@@ -148,11 +178,22 @@ const ScreenInfomations = ({route, navigation}) => {
         <Text style={styles.mTextCLS}>{COLOR}</Text>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {dataInfomation?.colors.map((i, index) => (
-            <TouchableOpacity key={index} style={styles.mViewColor}>
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.mViewColor,
+                {
+                  borderColor:
+                    stateColor == i.toString() ? Colors.Black : Colors.Gray41,
+                },
+              ]}
+              onPress={() => {
+                onSelectColor(i);
+              }}>
               <Image
                 source={require('../../../Assets/images/icons_vans.png')}
                 style={{
-                  tintColor: i,
+                  tintColor: stateColor == i.toString() ? Colors.Black : i,
                   width: Sizes.size_45,
                   height: Sizes.size_45,
                 }}
@@ -164,8 +205,29 @@ const ScreenInfomations = ({route, navigation}) => {
         <Text style={styles.mTextCLS}>{SIZE}</Text>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           {dataInfomation?.size.map((i, index) => (
-            <TouchableOpacity key={index} style={styles.mSize}>
-              <Text style={styles.titleSize}>{i}</Text>
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.mSize,
+                {
+                  borderColor:
+                    stateSize == i.toString() ? Colors.Black : Colors.Gray41,
+                },
+              ]}
+              onPress={() => {
+                onSelectSize(i);
+              }}>
+              <Text
+                style={[
+                  styles.titleSize,
+                  {
+                    color:
+                      stateSize == i.toString() ? Colors.Black : Colors.Gray21,
+                    fontWeight: stateSize == i.toString() ? 'bold' : '400',
+                  },
+                ]}>
+                {i}
+              </Text>
             </TouchableOpacity>
           ))}
         </ScrollView>

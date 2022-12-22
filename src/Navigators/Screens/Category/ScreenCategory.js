@@ -1,7 +1,7 @@
 import {View, Text, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './ScreenCategoryStyles';
-import {TITLE_HEADER} from '../../../Constants/Header';
+import {TITLE_HEADER, TITLE_HEADER_CATEGORY} from '../../../Constants/Header';
 import HeaderApp from '../../../Components/Header';
 import {dataIcon} from '../../../Utils/fakeData';
 import {TouchableOpacity} from 'react-native';
@@ -66,7 +66,7 @@ const ScreenCategory = ({navigation}) => {
         onBack={() => {}}
         isFavorite={true}
         onFavorite={onHandleFavorite}
-        titleHeader={TITLE_HEADER}
+        titleHeader={TITLE_HEADER_CATEGORY}
       />
       <Loading isLoading={isLoading} />
       <View style={styles.mContainer}>

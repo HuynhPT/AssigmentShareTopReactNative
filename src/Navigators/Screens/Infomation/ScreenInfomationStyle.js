@@ -43,8 +43,7 @@ export const styles = ScaledSheet.create({
   mViewColor: {
     width: Sizes.size_50,
     height: Sizes.size_50,
-    borderColor: Colors.Gray41,
-    borderWidth: Sizes.size_1,
+    borderWidth: Sizes.size_2,
     margin: '5@s',
     borderRadius: Sizes.size_15,
     backgroundColor: Colors.Gray51,
@@ -52,8 +51,7 @@ export const styles = ScaledSheet.create({
   mSize: {
     width: Sizes.size_50,
     height: Sizes.size_50,
-    borderColor: Colors.Gray41,
-    borderWidth: Sizes.size_1,
+    borderWidth: Sizes.size_2,
     margin: '5@s',
     borderRadius: Sizes.size_15,
     backgroundColor: Colors.Gray51,
@@ -98,7 +96,6 @@ export const styles = ScaledSheet.create({
   titleSize: {
     fontSize: Sizes.size_16,
     fontStyle: 'italic',
-    color: Colors.Gray31,
   },
   mtitleName: {
     fontSize: Sizes.size_22,

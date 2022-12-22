@@ -4,10 +4,11 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  BackHandler,
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import HeaderApp from '../../../Components/Header';
-import {TITLE_HEADER} from '../../../Constants/Header';
+import {TITLE_HEADER, TITLE_HEADER_HOME} from '../../../Constants/Header';
 import ProductNikeList from '../Products/ProductNike';
 import axios from 'axios';
 import {NAME_API} from '../../../Config/ApiConfig';
@@ -239,7 +240,7 @@ const ScreenHomeContainer = ({navigation}) => {
         onBack={() => {}}
         isFavorite={true}
         onFavorite={onHandleFavorite}
-        titleHeader={TITLE_HEADER}
+        titleHeader={TITLE_HEADER_HOME}
       />
       <View style={styles.mFlatlist}>
         <FlatList

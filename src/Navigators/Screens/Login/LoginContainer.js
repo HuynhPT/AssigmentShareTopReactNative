@@ -4,6 +4,7 @@ import {
   Image,
   ToastAndroid,
   TouchableWithoutFeedback,
+  BackHandler,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './LoginStyle';
@@ -49,7 +50,12 @@ const LoginContainer = ({navigation}) => {
 
   useEffect(() => {
     dispatch(setIsLoading(false));
+    BackHandler.addEventListener('hardwareBackPress', BackButton);
   }, []);
+  const BackButton = () => {
+    BackHandler.exitApp();
+    return true;
+  };
   const onHandleChangeTextUser = text => {
     setValUserName(text);
     dispatch(setIsCheckUser(false));
