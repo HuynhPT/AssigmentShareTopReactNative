@@ -1,4 +1,4 @@
-package com.assigemntmobile.newarchitecture.modules;
+package com.assigemntmobile.shoes.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

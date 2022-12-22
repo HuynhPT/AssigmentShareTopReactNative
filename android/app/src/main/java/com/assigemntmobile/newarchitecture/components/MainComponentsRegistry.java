@@ -1,4 +1,4 @@
-package com.assigemntmobile.newarchitecture.components;
+package com.assigemntmobile.shoes.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
