@@ -47,15 +47,15 @@ const LoginContainer = ({navigation}) => {
   // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
   const validatePass =
     '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}';
-
-  useEffect(() => {
-    dispatch(setIsLoading(false));
-    BackHandler.addEventListener('hardwareBackPress', BackButton);
-  }, []);
   const BackButton = () => {
     BackHandler.exitApp();
     return true;
   };
+  useEffect(() => {
+    dispatch(setIsLoading(false));
+    BackHandler.addEventListener('hardwareBackPress', BackButton);
+  }, []);
+
   const onHandleChangeTextUser = text => {
     setValUserName(text);
     dispatch(setIsCheckUser(false));
