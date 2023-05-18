@@ -13,3 +13,5 @@ export const ALER_PASSWORD =
 export const FACEBOOK = 'FaceBook';
 export const GOOGLE = 'Google';
 export const REMEMBER = 'Nhớ mật khẩu'
+export const SIGNIN = 'Tạo tài khoản'
+

@@ -7,6 +7,7 @@ export const styles = ScaledSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: Colors.white_bg,
+    paddingBottom:Sizes.size_20
   },
   mText: {
     marginTop: '16@vs',
@@ -52,7 +53,7 @@ export const styles = ScaledSheet.create({
     color: Colors.Gray81,
   },
   mRemember: {
-    marginTop: '16@vs',
+    // marginTop: '16@vs',
     flexDirection: 'row',
     // justifyContent:'center',
     alignItems: 'center',

@@ -58,12 +58,8 @@ const ScreenHomeContainer = ({navigation}) => {
     } catch (error) {}
   }, [dataBanner]);
   useEffect(() => {
-    try {
       //get Banner
-      axios({
-        method: 'GET',
-        url: `${NAME_API.LOCALHOST}` + `${NAME_API.GET_BANNER}`,
-      })
+      axios.get( `${NAME_API.LOCALHOST}` + `${NAME_API.GET_BANNER}`)
         .then(res => {
           console.log(res.data, 'dataBanner');
           setDataBanner(res.data);
@@ -123,9 +119,6 @@ const ScreenHomeContainer = ({navigation}) => {
         .catch(err => {
           console.log(err);
         });
-    } catch (error) {
-      console.log(error);
-    }
   }, []);
   const onHandleFavorite = () => {
     navigation.navigate(NameScreen.SCREEN_FAVORITE);

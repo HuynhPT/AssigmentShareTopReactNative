@@ -5,6 +5,7 @@ import {
   ToastAndroid,
   TouchableWithoutFeedback,
   BackHandler,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './LoginStyle';
@@ -12,6 +13,7 @@ import InputNormal from '../../../Components/InputNormal';
 import InputPassword from '../../../Components/InputPassWord';
 import {useDispatch, useSelector} from 'react-redux';
 import {
+  getAccount,
   setIsCheck,
   setIsCheckPass,
   setIsCheckRemember,
@@ -28,6 +30,7 @@ import {
   PLAHODER_PASSWORD,
   PLAHODER_USERNAME,
   REMEMBER,
+  SIGNIN,
   USER_NAME,
 } from '../../../Constants/Login';
 import {ButtonNormal, ButtonSocial} from '../../../Components/Button';
@@ -38,11 +41,15 @@ import {NameScreen} from '../../Containers/App';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Sizes} from '../../../Theme/sizes';
 import {setIsloading} from '../../../Store/SliceState/Home';
+import axios from 'axios';
+import {NAME_API} from '../../../Config/ApiConfig';
 
 const LoginContainer = ({navigation}) => {
   //Khởi tạo state dùng trong component
   const [valUserName, setValUserName] = useState('');
   const [valPassWord, setValPassWord] = useState('');
+
+  const [isAccount, setIsAccount] = useState([]);
   // validate password
   // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
   const validatePass =
@@ -54,6 +61,12 @@ const LoginContainer = ({navigation}) => {
   useEffect(() => {
     dispatch(setIsLoading(false));
     BackHandler.addEventListener('hardwareBackPress', BackButton);
+    axios({
+      url: `${NAME_API.LOCALHOST}` + `${NAME_API.GET_ACCOUNT}`,
+      method: 'GET',
+    }).then(res => {
+      setIsAccount(res.data);
+    });
   }, []);
 
   const onHandleChangeTextUser = text => {
@@ -65,25 +78,26 @@ const LoginContainer = ({navigation}) => {
     dispatch(setIsCheckPass(false));
   };
   const dispatch = useDispatch();
-  const {
-    isCheck,
-    isLoading,
-    isCheckUser,
-    isCheckPass,
-    isAccount,
-    isCheckRemember,
-  } = useSelector(state => ({
-    isCheck: state.loginState.isCheck,
-    isLoading: state.loginState.isLoading,
-    isCheckUser: state.loginState.isCheckUser,
-    isCheckPass: state.loginState.isCheckPass,
-    isAccount: state.loginState.isAccount,
-    isCheckRemember: state.loginState.isCheckRemember,
-  }));
+  const {isCheck, isLoading, isCheckUser, isCheckPass, isCheckRemember} =
+    useSelector(state => ({
+      isCheck: state.loginState.isCheck,
+      isLoading: state.loginState.isLoading,
+      isCheckUser: state.loginState.isCheckUser,
+      isCheckPass: state.loginState.isCheckPass,
+      isCheckRemember: state.loginState.isCheckRemember,
+    }));
   // check show pass
   const onHandleCheckShow = () => {
     dispatch(setIsCheck(!isCheck));
   };
+
+  console.log(
+    isAccount
+      .filter(item => item.userName == 'UserLogin')
+      .map(item => item.passworld)
+      .toString() == '123456aA@',
+    'loc',
+  );
   // login account
   const onHandleLogin = () => {
     if (isCheckRemember === true) {
@@ -98,8 +112,18 @@ const LoginContainer = ({navigation}) => {
     } else {
       if (valUserName !== '') {
         if (valPassWord !== '') {
-          if (valUserName === isAccount.userName) {
-            if (valPassWord === isAccount.passWord) {
+          if (
+            isAccount
+              .filter(item => item.userName == valUserName)
+              .map(item => item.userName)
+              .toString() == valUserName
+          ) {
+            if (
+              isAccount
+                .filter(item => item.userName == valUserName)
+                .map(item => item.passworld)
+                .toString() == valPassWord
+            ) {
               setTimeout(() => {
                 navigation.navigate(NameScreen.SCREEN_MAIN);
                 //loading login
@@ -142,18 +166,18 @@ const LoginContainer = ({navigation}) => {
       }
     }
   };
-  console.log(valUserName, 'user');
-  console.log(valPassWord, 'pass');
+  // console.log(valUserName, 'user');
+  // console.log(valPassWord, 'pass');
 
-  console.log(isLoading, 'loading');
+  // console.log(isLoading, 'loading');
 
-  console.log(isCheckUser, 'check user');
+  // console.log(isCheckUser, 'check user');
 
-  console.log(isCheckPass, 'checkpass');
+  // console.log(isCheckPass, 'checkpass');
 
-  console.log(isAccount, 'account');
+  // console.log(isAccount, 'account');
 
-  console.log(isCheckRemember, 'checkRemember');
+  // console.log(isCheckRemember, 'checkRemember');
   return (
     <View style={styles.mLoginContainer}>
       <View style={styles.mTitleContainer}>
@@ -194,15 +218,35 @@ const LoginContainer = ({navigation}) => {
             isCheckRemember === true ? isAccount?.passWord : valPassWord
           }
         />
-        <View style={styles.mRemember}>
-          <TouchableWithoutFeedback onPress={onHandleCheckremember}>
-            {!isCheckRemember ? (
-              <Icon name="checkbox-outline" size={Sizes.size_24} />
-            ) : (
-              <Icon name="checkbox" size={Sizes.size_24} />
-            )}
-          </TouchableWithoutFeedback>
-          <Text style={styles.mTextRemember}>{REMEMBER}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: Sizes.size_16,
+          }}>
+          <View style={styles.mRemember}>
+            <TouchableWithoutFeedback onPress={onHandleCheckremember}>
+              {!isCheckRemember ? (
+                <Icon name="checkbox-outline" size={Sizes.size_24} />
+              ) : (
+                <Icon name="checkbox" size={Sizes.size_24} />
+              )}
+            </TouchableWithoutFeedback>
+            <Text style={styles.mTextRemember}>{REMEMBER}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(NameScreen.SCREEN_SIGNIN);
+            }}>
+            <Text
+              style={[
+                styles.mTextRemember,
+                {color: Colors.Blue, textDecorationLine: 'underline'},
+              ]}>
+              {SIGNIN}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <ButtonNormal titleButton={LOGIN} onPress={onHandleLogin} />

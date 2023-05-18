@@ -6,12 +6,14 @@ import LoginContainer from '../../Screens/Login/LoginContainer';
 import BottomNavigator from '../BottomNavigation';
 import ScreenInfomations from '../../Screens/Infomation/ScreenInfomationsContainer';
 import ScreenFavoriteContainer from '../../Screens/Favorite/ScreenFavoriteContainer';
+import SignIn from '../../Screens/SignIn/SignIn';
 export const NameScreen = {
   SCREEN_MAIN: 'Main',
   SCREEN_SPLASH: 'Splash',
   SCREEN_LOGIN: 'Login',
   SCREEN_INFO: 'ScreenInfomations',
   SCREEN_FAVORITE: 'ScreenFavoriteContainer',
+  SCREEN_SIGNIN:'SignIn'
 };
 const AppContainer = () => {
   //Khởi tạo
@@ -47,6 +49,10 @@ const AppContainer = () => {
         <Native_Stack.Screen
           name={NameScreen.SCREEN_FAVORITE}
           component={ScreenFavoriteContainer}
+        />
+         <Native_Stack.Screen
+          name={NameScreen.SCREEN_SIGNIN}
+          component={SignIn}
         />
       </Native_Stack.Navigator>
     </NavigationContainer>

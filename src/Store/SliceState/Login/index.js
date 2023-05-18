@@ -12,10 +12,13 @@ const slice = createSlice({
     isLoading: false,
     isCheckUser: false,
     isCheckPass: false,
-    isAccount: {userName: 'admin', passWord: '123456aA@'},
+    isAccount: [],
     isCheckRemember: false,
   },
   reducers: {
+    getAccount:(state,actions )=>{
+      state.isAccount = actions.payload
+    },
     setIsCheck: (state, actions) => {
       state.isCheck = actions.payload;
     },
@@ -39,5 +42,6 @@ export const {
   setIsCheckUser,
   setIsCheckPass,
   setIsCheckRemember,
+  getAccount
 } = slice.actions;
 export default slice.reducer;
