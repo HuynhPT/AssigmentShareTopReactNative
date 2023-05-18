@@ -8,7 +8,7 @@ import InputPassword from '../../../Components/InputPassWord';
 import {ButtonNormal} from '../../../Components/Button';
 import axios from 'axios';
 import {NAME_API} from '../../../Config/ApiConfig';
-const SignIn = ({navigation}) => {
+const SignUp = ({navigation}) => {
   // Họ tên
   const [fistName, setFistName] = useState('');
   // Email
